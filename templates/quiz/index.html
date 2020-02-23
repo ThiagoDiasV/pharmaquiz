@@ -1,0 +1,19 @@
+{% extends "../base.html" %} 
+{% load static %}
+{% block content %}
+<h1>Pharmaquiz</h1>
+{% for question in data %}
+    <h2>Questão {{ question.id }}</h2>
+    <p>Enunciado: {{ question.enunciation }}</p>
+    <p>Banca: {{ question.company }}</p>
+    {% for option in question.options %}
+        <p><input class="option" type="radio" name="{{ question.enunciation }}" value="{{ option.text }}"> {{ option.text }}</p>
+    {% endfor %}
+    <button class="button" id="button-{{question.id}}">Conferir</button>
+{% endfor %}
+<script>
+    var button = document.getElementById('button-1');
+    var data = {{ json_data|safe }}
+</script>
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}
