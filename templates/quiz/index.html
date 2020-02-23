@@ -13,7 +13,17 @@
 {% endfor %}
 <script>
     var button = document.getElementById('button-1');
+    var options = document.getElementsByClassName('option');
     var data = {{ json_data|safe }}
+
+    button.onclick = () => {
+        var selected;
+        for (var i = 0; i < options.length; i++) {
+            if (options[i].checked) {
+                selected = options[i];
+            }
+        }
+    }
 </script>
 <script src="{% static 'js/main.js' %}"></script>
 {% endblock %}

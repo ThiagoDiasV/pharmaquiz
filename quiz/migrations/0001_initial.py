@@ -8,31 +8,62 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Question',
+            name="Question",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('enunciation', models.CharField(max_length=1000, verbose_name='Enunciado')),
-                ('company', models.CharField(max_length=100, verbose_name='Banca')),
-                ('subject', models.CharField(max_length=100, verbose_name='Assunto')),
-                ('created', models.DateTimeField(auto_now_add=True, verbose_name='Criado em')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "enunciation",
+                    models.CharField(max_length=1000, verbose_name="Enunciado"),
+                ),
+                ("company", models.CharField(max_length=100, verbose_name="Banca")),
+                ("subject", models.CharField(max_length=100, verbose_name="Assunto")),
+                (
+                    "created",
+                    models.DateTimeField(auto_now_add=True, verbose_name="Criado em"),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Option',
+            name="Option",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('text', models.CharField(max_length=500, verbose_name='Opção')),
-                ('is_correct', models.BooleanField(default=False, verbose_name='Está correto')),
-                ('enunciation', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='quiz.Question')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("text", models.CharField(max_length=500, verbose_name="Opção")),
+                (
+                    "is_correct",
+                    models.BooleanField(default=False, verbose_name="Está correto"),
+                ),
+                (
+                    "enunciation",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="quiz.Question"
+                    ),
+                ),
             ],
         ),
         migrations.AddConstraint(
-            model_name='option',
-            constraint=models.UniqueConstraint(fields=('enunciation', 'text'), name='unique_text_enunciation'),
+            model_name="option",
+            constraint=models.UniqueConstraint(
+                fields=("enunciation", "text"), name="unique_text_enunciation"
+            ),
         ),
     ]
