@@ -20,7 +20,11 @@ def index(request):
         for option in options:
             if option.enunciation_id == question.id:
                 question_data["options"].append(
-                    {"text": option.text, "is_correct": option.is_correct}
+                    {
+                        "enunciation_id": option.enunciation_id,
+                        "text": option.text,
+                        "is_correct": option.is_correct
+                    }
                 )
         data.append(question_data)
     return render(

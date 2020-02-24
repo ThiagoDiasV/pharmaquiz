@@ -3,27 +3,46 @@
 {% block content %}
 <h1>Pharmaquiz</h1>
 {% for question in data %}
-    <h2>Questão {{ question.id }}</h2>
-    <p>Enunciado: {{ question.enunciation }}</p>
-    <p>Banca: {{ question.company }}</p>
-    {% for option in question.options %}
-        <p><input class="option" type="radio" name="{{ question.enunciation }}" value="{{ option.text }}"> {{ option.text }}</p>
-    {% endfor %}
-    <button class="button" id="button-{{question.id}}">Conferir</button>
+    <div class="question-container" id="id-question-{{ question.id }}">
+        <h2 class="question-number">Questão {{ question.id }}</h2>
+        <p class="question-enunciation">Enunciado: {{ question.enunciation }}</p>
+        <p class="question-company">Banca: {{ question.company }}</p>
+        <ul>
+        {% for option in question.options %}
+            <li><input class="option" type="radio" name="{{ question.enunciation }}" value="{{ option.text }}"> {{ option.text }}</li>
+        {% endfor %}
+        </ul>
+        <button class="check-answer-button" id="check-button-{{ question.id }}">Conferir</button>
+    </div>
 {% endfor %}
 <script>
-    var button = document.getElementById('button-1');
-    var options = document.getElementsByClassName('option');
-    var data = {{ json_data|safe }}
-
-    button.onclick = () => {
-        var selected;
-        for (var i = 0; i < options.length; i++) {
-            if (options[i].checked) {
-                selected = options[i];
+    let data = {{ json_data|safe }};
+    let buttons = document.getElementsByClassName("check-answer-button");
+    let buttonsCount = buttons.length;
+    for (let i = 0; i < buttonsCount; i ++) {
+        buttons[i].onclick = function(e) {
+            let clickedButton = buttons[i];
+            let clickedButtonId = clickedButton.id.charAt(clickedButton.id.length-1);
+            for (let index in data) {
+                if (data[index].id.toString() === clickedButtonId) {
+                    let parentContainer = clickedButton.parentElement;
+                    let options = parentContainer.querySelectorAll(".option");
+                    let jsonData = data[index];
+                    for (let index in jsonData.options) {
+                        if (jsonData.options[index].is_correct) {
+                            let correctAnswer = jsonData.options[index].text;
+                            for (let index in options) {
+                                if (options[index].checked && options[index].value === correctAnswer) {
+                                    alert('acertou!');
+                                }
+                            }
+                        }
+                    }
+                }
             }
-        }
+        };
     }
+
 </script>
 <script src="{% static 'js/main.js' %}"></script>
 {% endblock %}
