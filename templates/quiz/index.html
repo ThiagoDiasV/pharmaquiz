@@ -1,18 +1,18 @@
 {% extends "../base.html" %} 
 
 {% block content %}
-<h1>Pharmaquiz</h1>
+<h1 class="text-center">Pharmaquiz</h1>
 {% for question in data %}
     <div class="question-container" id="id-question-{{ question.id }}">
         <h2 class="question-number">Questão {{ question.id }}</h2>
         <p class="question-enunciation">Enunciado: {{ question.enunciation }}</p>
         <p class="question-company">Banca: {{ question.company }}</p>
-        <ul>
+        <ul class="list-group">
         {% for option in question.options %}
-            <li><input class="option" type="radio" name="{{ question.enunciation }}" value="{{ option.text }}"> {{ option.text }}</li>
+            <li class="list-group-item"><input class="option" type="radio" name="{{ question.enunciation }}" value="{{ option.text }}"> {{ option.text }}</li>
         {% endfor %}
         </ul>
-        <button class="check-answer-button" id="check-button-{{ question.id }}">Conferir</button>
+        <button type="button" class="btn btn-primary btn-block check-answer-button mt-2 mb-5" id="check-button-{{ question.id }}">Conferir</button>
     </div>
 {% endfor %}
 <script>
