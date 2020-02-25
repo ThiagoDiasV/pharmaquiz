@@ -1,0 +1,15 @@
+.green-bg {
+    transition: .8s all ease;
+    background-color: rgba(31, 187, 44, 0.719);;
+}
+
+.red-bg {
+    transition: .8s all ease;
+    background-color: rgba(228, 30, 30, 0.548);
+    color: white;
+}
+
+.normal-bg {
+    transition: .8s all ease;
+    background-color: #fff;
+}
